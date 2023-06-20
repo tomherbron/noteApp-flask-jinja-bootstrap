@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 align="center">Categories</h1>
+    <ul class="list-group list-group-flush" id="categories">
+        {% for category in user.categories %}
+            <li class="list-group-item">{{ category.name }}
+            <button type="button" class="close" onclick="confirm('Are you sure?'); deleteCategory({{ category.id }})">
+                    <span aria-hidden="true">&times;</span>
+            </button>
+            </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <div class="container">
+        <form method="POST">
+            <label for="category">New category :</label>
+            <input type="text" name="category" id="category" class="form-control" placeholder="Enter category title"></input>
+            <br>
+            <div class="align-center">
+                <button type="submit" class="btn btn-primary">Add Category</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %} Home {% endblock %}
+{% block content %}
+    <h1>Welcome to Notes.app, {{ user.first_name }}!</h1>
+    <ul class="list-group list-group-flush" id="notes">
+        {% for note in notes %}
+            <li class="list-group-item">
+                <div class="text-primary"><strong>{{ note.data }}</strong></div><br>
+                <strong>Date :</strong> {{ note.date.strftime('%a %d %B %Y') }} <br>
+                <strong>Category :</strong> {{ category_names.get(note.category_id) }}
+                <button type="button" class="close" onclick="confirm('Are you sure?'); deleteNote({{ note.id }})">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <div class="container">
+        <form method="POST">
+            <label for="note">New note :</label>
+            <textarea name="note" id="note" class="form-control"></textarea>
+            <br>
+            <label for="category">Select category :</label>
+            <select name="category" id="category">
+                {% for category in user.categories %}
+                    <option value="{{ category.name }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+                <a class="btn btn-secondary" href="{{ url_for('views.add_category') }}">Add Categories</a>
+            <br>
+            <div class="align-center">
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
